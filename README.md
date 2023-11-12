@@ -1,6 +1,6 @@
 # StockControl
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.2.2.
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.2.2, and it depends on another repository to run it's backend server, wich can be found [here](https://github.com/marcosJuniorPassarella/stock-api). To run it, open a CMD window, and run "yarn", to download everything needed to compile it. At the end of installation, run "yarn dev", to run the backend.
 
 ## Development server
 
