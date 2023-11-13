@@ -11,7 +11,6 @@
   --shadow-light: rgba(255,255,255,.277);
 }
 
-/*
 * {
   html,
   body,
@@ -94,9 +93,9 @@
   mark,
   audio,
   video {
-    margin-top: 0;
+    /*margin-top: 0;
     padding: 0;
-    border: 0;
+    border: 0;*/
     font-size: 100%;
     font: inherit;
     font-family: sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
@@ -181,4 +180,3 @@
     width: 50%;
   }
 }
-*/

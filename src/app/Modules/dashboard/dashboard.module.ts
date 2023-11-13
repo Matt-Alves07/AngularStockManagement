@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { DASHBOARD_ROUTES } from './dashboard.routing';
+import { SharedModule } from 'src/app/shared/shared.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DashboardHomeComponent } from './page/dashboard-home/dashboard-home.component';
 
@@ -24,6 +25,7 @@ import { ChartModule } from 'primeng/chart'
     ChartModule,
     CommonModule,
     ButtonModule,
+    SharedModule,
     SidebarModule,
     ToolbarModule,
     ReactiveFormsModule,

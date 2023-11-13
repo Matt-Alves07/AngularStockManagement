@@ -1,0 +1,49 @@
+<p-toolbar styleClass="bg-indigo-800">
+  <div class="p-toolbar-group-start">
+    <p-button
+      icon="pi pi-home"
+      label="Dashboard"
+      routerLink="/dasboard"
+      styleClass="bg-indigo-800 p-button-secondary"
+      routerLinkActive="exact_route"
+    ></p-button>
+  </div>
+
+  <div class="p-toolbar-group-center">
+    <p-button
+      label="Products"
+      icon="pi pi-cart-plus"
+      routerLink="/products"
+      styleClass="bg-indigo-800 p-button-secondary"
+      routerLinkActive="exact_route"
+      class="mr-2"
+    ></p-button>
+
+    <p-button
+      label="Categories"
+      icon="pi pi-ticket"
+      routerLink="/categories"
+      styleClass="bg-indigo-800 p-button-secondary"
+      routerLinkActive="exact_route"
+      class="mr-2"
+    ></p-button>
+
+    <p-button
+      label="Sell"
+      icon="pi pi-credit-card"
+      routerLink="/products"
+      styleClass="bg-indigo-800 p-button-secondary"
+      routerLinkActive="exact_route"
+      class="mr-2"
+    ></p-button>
+  </div>
+
+  <div class="p-toolbar-group-end">
+    <p-button
+      label="Sign out"
+      icon="pi pi-sign-out"
+      styleClass="p-button-danger"
+      (onClick)="handleLogoff()"
+    ></p-button>
+  </div>
+</p-toolbar>
