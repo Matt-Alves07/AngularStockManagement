@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { MessageService } from 'primeng/api';
 import { CookieService } from 'ngx-cookie-service';
+import { FormBuilder, Validators } from '@angular/forms';
+import { UserService } from 'src/app/services/user/user.service';
 import { AuthRequest } from 'src/app/Models/Interfaces/user/AuthRequest';
 import { SignupUserRequest } from 'src/app/Models/Interfaces/user/SignupUserRequest';
-import { UserService } from 'src/app/services/user/user.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -24,9 +26,11 @@ export class HomeComponent {
   });
 
   constructor(
+    private router: Router,
     private formBuilder: FormBuilder,
     private userService: UserService,
-    private cookieService: CookieService
+    private cookieService: CookieService,
+    private messageService: MessageService,
   ) {}
 
   onSubmitLoginForm(): void {
@@ -37,9 +41,25 @@ export class HomeComponent {
             if (response) {
               this.cookieService.set("token", response?.token, 1);
               this.loginForm.reset;
+
+              this.router.navigate(['/dashboard']);
+
+              this.messageService.add({
+                severity: 'success',
+                summary: 'Successful Login!',
+                detail: `Welcome ${response?.name}`,
+                life: 5000
+              });
             }
           },
-          error: (error) => console.error(error),
+          error: (error) => {
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Error Occurred!',
+              detail: 'Something went wrong when trying to login',
+              life: 10000
+            })
+          },
         })
     }
   }
@@ -51,12 +71,25 @@ export class HomeComponent {
         .subscribe({
           next: (response) => {
             if (response) {
-              alert('User created succesfully.');
               this.signUpForm.reset;
               this.loginCard = true;
+
+              this.messageService.add({
+                severity: 'success',
+                summary: 'User created successfully!',
+                detail: `Welcome ${response?.name}`,
+                life: 5000
+              });
             }
           },
-          error: (error) => console.error(error),
+          error: (error) => {
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Error Occurred!',
+              detail: 'Something went wrong when trying to create an account',
+              life: 10000
+            })
+          },
         });
     }
   }

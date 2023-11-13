@@ -11,6 +11,7 @@ import { HomeComponent } from './Modules/home/home.component';
 /*PRIME NG*/
 import { CardModule } from 'primeng/card';
 import { ToastModule } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 
@@ -36,7 +37,8 @@ import { CookieService } from 'ngx-cookie-service';
     InputTextModule,
   ],
   providers: [
-    CookieService
+    CookieService,
+    MessageService
   ],
   bootstrap: [AppComponent]
 })

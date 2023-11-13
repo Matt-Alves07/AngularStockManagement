@@ -6,6 +6,8 @@ import { AuthRequest } from 'src/app/Models/Interfaces/user/AuthRequest';
 import { AuthResponse } from 'src/app/Models/Interfaces/user/AuthResponse';
 import { SignupUserRequest } from './../../Models/Interfaces/user/SignupUserRequest';
 import { SignupUserResponse } from 'src/app/Models/Interfaces/user/SignupUserResponse';
+import { CookieService } from 'ngx-cookie-service';
+import { Token } from '@angular/compiler';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +15,10 @@ import { SignupUserResponse } from 'src/app/Models/Interfaces/user/SignupUserRes
 export class UserService {
   private API_URL: string = enviroment.API_URL;
 
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient,
+    private cookieService: CookieService
+  ) { }
 
   signupUser(request: SignupUserRequest): Observable<SignupUserResponse> {
     return this.http.post<SignupUserResponse>(
@@ -27,5 +32,11 @@ export class UserService {
       `${this.API_URL}/auth`,
       request
     );
+  }
+
+  isLoggedIn(): boolean {
+    const TOKEN = this.cookieService.get('token');
+
+    return TOKEN ? true : false;
   }
 }
