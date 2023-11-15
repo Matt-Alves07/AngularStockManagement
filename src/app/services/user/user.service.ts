@@ -2,10 +2,10 @@ import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { enviroment } from 'src/environments/enviroment';
-import { AuthRequest } from 'src/app/Models/Interfaces/user/AuthRequest';
-import { AuthResponse } from 'src/app/Models/Interfaces/user/AuthResponse';
-import { SignupUserRequest } from './../../Models/Interfaces/user/SignupUserRequest';
-import { SignupUserResponse } from 'src/app/Models/Interfaces/user/SignupUserResponse';
+import { AuthRequest } from 'src/app/Models/Interfaces/user/request/AuthRequest';
+import { AuthResponse } from 'src/app/Models/Interfaces/user/response/AuthResponse';
+import { SignupUserRequest } from './../../Models/Interfaces/user/request/SignupUserRequest';
+import { SignupUserResponse } from 'src/app/Models/Interfaces/user/response/SignupUserResponse';
 import { CookieService } from 'ngx-cookie-service';
 import { Token } from '@angular/compiler';
 
