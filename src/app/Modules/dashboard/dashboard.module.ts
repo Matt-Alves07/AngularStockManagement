@@ -13,13 +13,15 @@ import { ButtonModule } from 'primeng/button';
 import { SidebarModule } from 'primeng/sidebar';
 import { ToolbarModule } from 'primeng/toolbar';
 import { CookieService } from 'ngx-cookie-service';
-import { ChartModule } from 'primeng/chart'
+import { ChartModule } from 'primeng/chart';
+import { Card, CardModule } from 'primeng/card';
 
 @NgModule({
   declarations: [
     DashboardHomeComponent
   ],
   imports: [
+    CardModule,
     FormsModule,
     ToastModule,
     ChartModule,

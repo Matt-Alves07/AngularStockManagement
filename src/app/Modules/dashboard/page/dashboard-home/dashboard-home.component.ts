@@ -37,6 +37,7 @@ export class DashboardHomeComponent implements OnInit, OnDestroy {
           if (response.length > 0) {
             this.productsList = response;
             this.productsDtService.setProductsData(this.productsList);
+            this.setProductsChartConfig();
           }
         },
         error: () => {
@@ -48,6 +49,65 @@ export class DashboardHomeComponent implements OnInit, OnDestroy {
           });
         }
       })
+  }
+
+  setProductsChartConfig(): void {
+    if (this.productsList.length <= 0) {
+      return;
+    }
+
+    const documentStyle = getComputedStyle(document.documentElement);
+    const textColor = documentStyle.getPropertyValue('--text-color');
+    const secondaryTextColor = documentStyle.getPropertyValue('--text-color-secondary');
+    const surfaceBorder = documentStyle.getPropertyValue('--surface-border');
+
+    this.chartDatas = {
+      labels: this.productsList.map((element) => element?.name),
+      datasets: [{
+        label: 'Amount',
+        backgroundColor: documentStyle.getPropertyValue('--indigo-400'),
+        borderColor: documentStyle.getPropertyValue('--indigo-400'),
+        hoverBackgroundColor: documentStyle.getPropertyValue('--indigo-500'),
+        data: this.productsList.map((element) => element?.amount),
+      }]
+    };
+
+    this.chartOption = {
+      maintainAspectRatio: false,
+      aspectRatio: 0.8,
+      plugins: {
+        legend: {
+          labels: {
+            color: textColor,
+          }
+        }
+      },
+
+      scales: {
+        x: {
+          ticks: {
+            color: secondaryTextColor,
+            font: {
+              weight: '500',
+            }
+          },
+
+          grid: {
+            color: surfaceBorder,
+          }
+        },
+
+        y: {
+          ticks: {
+            color: secondaryTextColor,
+          },
+
+          grid: {
+            color: surfaceBorder,
+          }
+        }
+      },
+    }
   }
 
   ngOnDestroy(): void {
