@@ -128,7 +128,7 @@
                   tooltipPosition="top"
                   pTooltip="Add new product"
                   styleClass="p-button-success"
-                  (onClick)="handleAddProductEvent()"
+                  (onClick)="handleProductEvent(addProductEvent)"
                 ></p-button>
               </div>
             </th>
@@ -151,21 +151,25 @@
 
             <td>
               <div class="flex justify-content-center gap-3 align-content-center align-items-center">
-                <p-button
+                <button
+                  pButton
+                  pRipple
                   icon="pi pi-pencil"
-                  tooltipPosition="top"
+                  class="p-button-rounded p-button-warning"
                   pTooltip="Edit product"
-                  styleClass="p-button-rounded p-button-warning"
-                  (onClick)="handleEditProductEvent()"
-                ></p-button>
-
-                <p-button
-                  icon="pi pi-trash"
                   tooltipPosition="top"
+                  (click)="handleProductEvent(editProductEvent, product?.id)"
+                ></button>
+
+                <button
+                  pButton
+                  pRipple
+                  icon="pi pi-trash"
+                  class="p-button-rounded p-button-danger"
                   pTooltip="Delete product"
-                  styleClass="p-button-rounded p-button-danger"
-                  (onClick)="handleDeleteProductEvent()"
-                ></p-button>
+                  tooltipPosition="top"
+                  (click)="handleDeleteProduct(product?.id, product?.name)"
+                ></button>
               </div>
             </td>
           </tr>
