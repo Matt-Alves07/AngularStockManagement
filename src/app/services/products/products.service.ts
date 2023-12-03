@@ -7,6 +7,7 @@ import { GetAllProductsResponse } from 'src/app/Models/Interfaces/products/respo
 import { DeleteProductResponse } from 'src/app/Models/Interfaces/products/response/DeleteProductResponse';
 import { CreateProductRequest } from 'src/app/Models/Interfaces/products/request/create-product-request';
 import { CreateProductResponse } from 'src/app/Models/Interfaces/products/response/CreateProductResponse';
+import { EditProductRequest } from 'src/app/Models/Interfaces/products/request/edit-product-request';
 
 @Injectable({
   providedIn: 'root'
@@ -53,6 +54,15 @@ export class ProductsService {
     return this.http
       .post<CreateProductResponse>(
         `${this.API_URL}/product`,
+        request,
+        this.httpOptions
+      );
+  }
+
+  EditProduct(request: EditProductRequest): Observable<void> {
+    return this.http
+      .put<void>(
+        `${this.API_URL}/product/edit`,
         request,
         this.httpOptions
       );

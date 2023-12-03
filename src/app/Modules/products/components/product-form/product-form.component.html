@@ -1,8 +1,8 @@
 <!--NEW PRODUCT FORM-->
-<div>
+<div *ngIf="productAction?.event?.action === addProductAction">
   <form [formGroup]="addProductForm" (ngSubmit)="handleSubmitAddProduct()">
     <div class="card flex flex-column md:flex-column gap-3">
-      <input pInputText placeholder="Name" formControlName="name" />
+      <input pInputText placeholder="Product name..." formControlName="name" />
 
       <p-dropdown
         styleClass="w-full"
@@ -14,16 +14,16 @@
         formControlName="category_id"
       ></p-dropdown>
 
-      <input pInputText placeholder="Price" formControlName="price" />
+      <input pInputText placeholder="Product price..." formControlName="price" />
 
-      <input pInputText placeholder="Description" formControlName="description" />
+      <input pInputText placeholder="Prduct description..." formControlName="description" />
 
-      <input pInputNumber placeholder="Amount" formControlName="amount" />
+      <input pInputNumber placeholder="Product amount..." formControlName="amount" />
 
       <div class="flex flex-row justify-content-center align-content-center align-items-center m-1">
         <p-button
           type="submit"
-          label="Include product"
+          label="Add product"
         ></p-button>
       </div>
     </div>
@@ -31,3 +31,23 @@
 </div>
 
 <!--EDIT PRODUCT FORM-->
+<div *ngIf="productAction?.event?.action === editProductAction">
+  <form [formGroup]="editProductForm" (ngSubmit)="handleSubmitEditProduct()">
+    <div class="card flex flex-column md:flex-column gap-3">
+      <input pInputText placeholder="Product name..." formControlName="name" />
+
+      <input pInputText placeholder="Product price..." formControlName="price" />
+
+      <input pInputText placeholder="Product description..." formControlName="description" />
+
+      <input pInputNumber placeholder="Product amount..." formControlName="amount">
+
+      <div class="flex flex-row justify-content-center align-content-center align-items-center m-1">
+        <p-button
+          type="submit"
+          label="Save product"
+        ></p-button>
+      </div>
+    </div>
+  </form>
+</div>
