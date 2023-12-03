@@ -6,6 +6,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ProductsHomeComponent } from './page/products-home/products-home.component';
+import { ProductFormComponent } from './components/product-form/product-form.component';
+import { ProductsTableComponent } from './components/products-table/products-table.component';
 
 //PRIMENG
 import { CardModule } from 'primeng/card';
@@ -21,12 +23,12 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogService, DynamicDialogModule } from 'primeng/dynamicdialog';
-import { ProductsTableComponent } from './components/products-table/products-table.component';
 
 @NgModule({
   declarations: [
     ProductsHomeComponent,
     ProductsTableComponent,
+    ProductFormComponent,
   ],
   imports: [
     FormsModule,

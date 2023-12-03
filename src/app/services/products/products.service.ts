@@ -5,6 +5,8 @@ import { enviroment } from 'src/environments/enviroment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { GetAllProductsResponse } from 'src/app/Models/Interfaces/products/response/GetAllProductsResponse';
 import { DeleteProductResponse } from 'src/app/Models/Interfaces/products/response/DeleteProductResponse';
+import { CreateProductRequest } from 'src/app/Models/Interfaces/products/request/create-product-request';
+import { CreateProductResponse } from 'src/app/Models/Interfaces/products/response/CreateProductResponse';
 
 @Injectable({
   providedIn: 'root'
@@ -44,6 +46,15 @@ export class ProductsService {
             product_id: id,
           }
         }
+      );
+  }
+
+  AddProduct(request: CreateProductRequest): Observable<CreateProductResponse> {
+    return this.http
+      .post<CreateProductResponse>(
+        `${this.API_URL}/product`,
+        request,
+        this.httpOptions
       );
   }
 }
