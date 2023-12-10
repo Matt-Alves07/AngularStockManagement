@@ -35,10 +35,60 @@ export class CategoryFormComponent implements OnInit, OnDestroy {
     private formBuilder: FormBuilder,
     private messageService: MessageService,
     private categoryService: CategoriesService
-  ) {}
+    ) {}
 
-  ngOnInit(): void {
-    throw new Error('Method not implemented.');
+    ngOnInit(): void {
+      this.categoryAction = this.ref.data;
+
+      if (this.categoryAction?.event?.action === this.editCategoryAction && (this.categoryAction?.event?.categoryName !== null || undefined))
+        this.setCategoryName(this.categoryAction?.event?.categoryName as string);
+    }
+
+  handleSubmitCategoryAction(): void {
+    if (this.categoryAction?.event?.action)
+      this.categoryAction?.event?.action === this.addCategoryAction ? this.handleSubmitAddCategory() : this.handleSubmitEditCategory();
+  }
+
+  setCategoryName(name: string): void {
+    if (name)
+      this.categoryForm.setValue({
+        name: name,
+      });
+  }
+
+  handleSubmitEditCategory(): void {
+    if (this.categoryForm?.value && this.categoryForm?.valid && this.categoryAction?.event?.id) {
+      const requestEditCategory: { id: string; name: string} = {
+        id: this.categoryAction?.event?.id,
+        name: this.categoryForm?.value?.name as string,
+      };
+
+      this.categoryService
+        .EditCategory(requestEditCategory)
+          .pipe(takeUntil(this.destroy$))
+          .subscribe({
+            next: (response) => {
+              this.messageService.add({
+                severity: 'success',
+                summary: 'Category updated',
+                detail: 'Category updated successfully',
+                life: 5000
+              });
+            },
+            error: (error) => {
+              console.error(error);
+
+              this.categoryForm.reset();
+
+              this.messageService.add({
+                severity: 'error',
+                summary: 'Error',
+                detail: `Something went wrong while trying to edit the category ${requestEditCategory.name}.`,
+                life: 4000,
+              });
+            }
+          });
+    }
   }
 
   handleSubmitAddCategory(): void {
