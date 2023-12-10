@@ -7,7 +7,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 //CATEGORIES COMPONENTS AND ROUTING
 import { CATEGORIES_ROUTES } from './categories.routing';
+import { CategoryFormComponent } from './components/category-form/category-form.component';
 import { CategoriesHomeComponent } from './pages/categories-home/categories-home.component';
+import { CategoriesTableComponent } from './components/categories-table/categories-table.component';
 
 //PRIME NG MODULES
 import { CardModule } from 'primeng/card';
@@ -25,7 +27,7 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogService, DynamicDialogModule } from 'primeng/dynamicdialog';
 
 @NgModule({
-  declarations: [ CategoriesHomeComponent ],
+  declarations: [ CategoriesHomeComponent, CategoriesTableComponent, CategoryFormComponent ],
   imports: [
     FormsModule,
     CommonModule,
