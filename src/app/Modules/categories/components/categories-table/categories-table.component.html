@@ -1,0 +1,85 @@
+<div class="grid">
+  <div class="col-12">
+    <p-card
+      styleClass="shadow-3 m-5 text-indigo-800"
+      header="Product's categories"
+    >
+      <p-table
+        [rows]="10"
+        dataKey="id"
+        [rowHover]="true"
+        [paginator]="true"
+        [responsive]="true"
+        [value]="categories"
+        [showCurrentPageReport]="true"
+        [(selection)]="selectedCategory"
+        [tableStyle]="{ 'min-width': '75rem' }"
+        currentPageReportTemplate="Showing {first} of {last} from {totalRecords} categories"
+      >
+        <ng-template pTemplate="header">
+          <tr>
+            <th pSortableColumn="name">
+              <div class="flex justify-content-center align-items-center">
+                <div class="flex justify-content-between align-items-center">
+                  Name
+                </div>
+
+                <div class="flex justify-content-between align-items-center">
+                  <p-sortIcon field="name"></p-sortIcon>
+
+                  <p-columnFilter
+                    type="text"
+                    field="name"
+                    display="menu"
+                    matchMode="contains"
+                    [showOperator]="false"
+                    [showAddButton]="false"
+                    [showMatchModes]="false"
+                  ></p-columnFilter>
+                </div>
+              </div>
+            </th>
+
+            <th>
+              <div class="flex justify-content-center">
+                <p-button
+                  label="Add"
+                  icon="pi pi-plus"
+                  styleClass="p-button-success"
+                  (onClick)="handleCategoryEvent(addCategoryEvent)"
+                ></p-button>
+              </div>
+            </th>
+          </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" let-category>
+          <tr>
+            <td>{{ category?.name }}</td>
+
+            <td>
+              <div class="flex justify-content-center gap-3 align-content-center align-items-center">
+                <button
+                  pButton
+                  pRipple
+                  icon="pi pi-pencil"
+                  class="p-button-rounded p-button-warning"
+                ></button>
+
+                <button
+                  pButton
+                  pRipple
+                  icon="pi pi-trash"
+                  class="p-button-rounded p-button-danger"
+                  (click)="handleDeleteCategoryEvent(category.id, category.name)"
+                ></button>
+              </div>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </p-card>
+  </div>
+
+  <p-confirmDialog [style]="{ width: '50vw' }"></p-confirmDialog>
+</div>
