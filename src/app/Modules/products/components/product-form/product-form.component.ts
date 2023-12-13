@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Component, OnDestroy, OnInit } from '@angular/core';
@@ -16,6 +17,7 @@ import { EventAction } from 'src/app/Models/Interfaces/products/event/event-acti
 import { ProductsDataTransferService } from 'src/app/shared/services/products/products-data-transfer.service';
 import { ProductEvent } from 'src/app/Models/enums/products/product-event';
 import { EditProductRequest } from 'src/app/Models/Interfaces/products/request/edit-product-request';
+import { SaleProductRequest } from 'src/app/Models/Interfaces/products/request/sale-product-request';
 
 @Component({
   selector: 'app-product-form',
@@ -23,22 +25,32 @@ import { EditProductRequest } from 'src/app/Models/Interfaces/products/request/e
   styleUrls: ['./product-form.component.scss']
 })
 export class ProductFormComponent implements OnInit, OnDestroy {
+  // #region Private vars
   private readonly destroy$: Subject<void> = new Subject();
+  // #endregion
 
+  // #region Publics vars
   public renderDropdown: boolean = false;
   public selectedProductData!: GetAllProductsResponse;
   public categoriesData: Array<getCategoriesResponse> = [];
   public productsDatas: Array<GetAllProductsResponse> = [];
   public selectedCategory: Array<{name: string; code: string}> = [];
+  // #endregion
 
+  // #region Products actions
   public addProductAction = ProductEvent.ADD_PRODUCT_EVENT;
   public editProductAction = ProductEvent.EDIT_PRODUCT_EVENT;
   public saleProductAction = ProductEvent.SALE_PRODUCT_EVENT;
+  // #endregion
 
+  // #region Product action interface
   public productAction!: {
     event: EventAction;
     productsList: Array<GetAllProductsResponse>;
   };
+  // #endregion
+
+  // #region Products forms builders
   public addProductForm = this.formBuilder.group({
     name: ['',Validators.required],
     price: ['', Validators.required],
@@ -46,6 +58,7 @@ export class ProductFormComponent implements OnInit, OnDestroy {
     category_id: ['',Validators.required],
     amount: [0, Validators.required],
   });
+
   public editProductForm = this.formBuilder.group({
     name: ['',Validators.required],
     price: ['',Validators.required],
@@ -54,7 +67,16 @@ export class ProductFormComponent implements OnInit, OnDestroy {
     category_id: ['',Validators.required],
   });
 
+  public saleProductForm = this.formBuilder.group({
+    amount: [0,Validators.required],
+    product_id: ['',Validators.required],
+  });
+
+  public sellSelectedProduct!: GetAllProductsResponse;
+  // #endregion
+
   constructor(
+    private router: Router,
     public ref: DynamicDialogConfig,
     private formBuilder: FormBuilder,
     private messageService: MessageService,
@@ -129,7 +151,7 @@ export class ProductFormComponent implements OnInit, OnDestroy {
               summary: 'Error',
               detail: 'An error happened while trying to create a new product.',
               life: 3000
-            })
+            });
           }
         });
 
@@ -181,7 +203,59 @@ export class ProductFormComponent implements OnInit, OnDestroy {
                 summary: 'Error',
                 detail: "Something went wrong while trying to save product's changes.",
                 life: 3000,
-              })
+              });
+            }
+          });
+    }
+  }
+
+  handleSubmitProductSale(): void {
+    if (this.saleProductForm?.value) {
+      console.log(this.saleProductForm);
+
+      if (!this.saleProductForm?.valid) {
+        this.messageService.add({
+          severity: 'warn',
+          summary: 'Warning',
+          detail: 'Please fill all fields correctly before submitting the form.',
+          life: 4000
+        });
+
+        return;
+      }
+
+      const requestData: SaleProductRequest = {
+        amount: this.saleProductForm.value?.amount as number,
+        id: this.saleProductForm.value?.product_id as string,
+      }
+
+      this.productsService
+        .SaleProduct(requestData)
+          .pipe(takeUntil(this.destroy$))
+          .subscribe({
+            next: (response) => {
+              if (response) {
+                this.messageService.add({
+                  severity: 'success',
+                  summary: 'Success',
+                  detail: 'Product sold successfully',
+                  life: 5000
+                });
+
+                this.saleProductForm.reset();
+                this.getProductData();
+                this.router.navigate(['/dashboard']);
+              }
+            }, error: (err) => {
+              console.error(err);
+
+              this.saleProductForm.reset();
+              this.messageService.add({
+                severity: 'error',
+                summary: 'Error',
+                detail: "Something went wrong while trying to sell a product.",
+                life: 3000,
+              });
             }
           });
     }
